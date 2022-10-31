@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.body {
+  position: absolute;
+}
+
+.comp {
+  height: 240px;
+  width: 160px;
+  border-radius: 15px;
+  background-color: rgb(100, 10, 10);
+  position: absolute;
+}
+
+#comp1 {
+  overflow: hidden;
+}
