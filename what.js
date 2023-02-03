@@ -2,8 +2,12 @@ let radius = 250;
 let numberOfBox = 10;
 const body = document.querySelector(".body");
 const controllRadius = document.querySelector("#radius");
+
+//원 중심 찾기
 let centerX = body.style.height.slice(0, -2) / 2 + 100;
 let centerY = body.style.width.slice(0, -2) / 2;
+
+//색 목록
 let colors = [
   "red",
   "orange",
@@ -16,12 +20,26 @@ let colors = [
   "brown",
 ];
 
+/**
+ *
+ * @param {integer} N
+ * @param {bool} inner
+ * 안에다 그릴 원, 밖에다 그릴 원 결정
+ * @param {*} startX
+ * 바탕화면을 기준으로 그리게 될지, 안에다가 그리게 될지에 따라 박스를 놓아야 하는 위치가 달라짐. 상대위치를 구하기 위한 초기위치값의 X
+ * 바깥 원이라면 시작 X가 0 일거고 안에 원이라면 시작 X가 첫번째 박스의 X 좌표 일거임
+ * @param {*} startY
+ * @param {*} R
+ * 원 반지름
+ */
 function makeComponent(N, inner, startX, startY, R) {
   let parentComp;
   let zStart;
   let compNum;
   const firstComp = document.querySelector("#comp1");
   firstComp.style.zIndex = N;
+
+  //안에 놓는 원은 N 개를 놓는게 아니라 절반만 놓을거임
   if (inner) {
     parentComp = document.querySelector("#comp1");
     compNum = Math.floor(N / 2 + 1);
@@ -32,6 +50,7 @@ function makeComponent(N, inner, startX, startY, R) {
     zStart = 0;
   }
 
+  //현재 기준 좌표에 대한 원의 중심의 상대적인 위치
   const curCenX = centerX - startX;
   const curCenY = centerY - startY;
 
@@ -53,6 +72,7 @@ function makeComponent(N, inner, startX, startY, R) {
   }
 }
 
+//전체 화면 기준 첫 박스 위치 찾기(직사각형 왼쪽 상단 꼭지점 위치)
 function getComp1Position(R) {
   let comp1X = centerX - R - 120;
   let comp1Y = centerY - 80;
@@ -67,6 +87,7 @@ comp1.style.top = `${comp1X}px`;
 makeComponent(numberOfBox, false, 0, 0, radius);
 makeComponent(numberOfBox, true, comp1X, comp1Y, radius);
 
+// 좌 상단에 스크롤 바에 따라서 반지름 늘리고 줄여서 애니메이션 줌
 controllRadius.addEventListener("input", (e) => {
   radius = e.target.value;
   const bodyComp = document.querySelector(".body");
